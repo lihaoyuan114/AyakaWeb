@@ -5,8 +5,6 @@
 
 ### Personal Website of Takeuchi Ayaka
 
-![Icon](./README_Image/newicon.png)
-
 **Ayaka Web** is the official personal website of **Takeuchi Ayaka (竹内綾香)**.
 
 This website presents her profile, related projects, and public content.
@@ -20,13 +18,6 @@ It serves as her online presence and central information hub.
 * Project showcase
 * Blog / articles
 * Gallery
-* Live2D display (optional)
-
----
-
-## Development Status
-
-Under active development.
 
 ---
 
