@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>绫香的回忆小屋</title>
+    <!-- Include AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Include Live2D SDK -->
+    <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script> 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- AOS setting -->
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: false,
+        });
+    </script>
+
+    <section class="hero" style="--hero-bg: url('Resource/Image/BackGround2.png')">
+        <!-- Glass effect -->
+        <div id="glass-overlay"></div>
+        
+        <!-- Title page -->
+        <h1 class="zcool-kuaile-regular title" data-aos="zoom-in">绫香的回忆小屋～</h1>
+        
+        <div class="scroll-down">
+            <i class="arrow-icon">∨</i>
+        </div>
+        
+        <!-- <br> -->
+        <section class="content-section" style="min-height: 50vh;"></section>
+        
+        <!-- Character Info page -->
+        <section class="content-section">
+            <div class="ayaka-bg-container">
+                <span class="ayaka-stroke-text">AYAKA</span>
+                <span class="ayaka-stroke-text">AYAKA</span>
+                <span class="ayaka-stroke-text">AYAKA</span>
+            </div>
+            <canvas id="live2d-canvas" data-aos="fade-right"></canvas>
+
+            <div class="panels-column">
+                <div class="panel" data-aos="fade-left">
+                    <h2 class="zcool-kuaile-regular">这里是竹内绫香！</h2>
+                    <p>绫香是一只诞生于数字之海的猫娘，身边会有两架无人机保护我哦！</p>
+                </div>
+
+                <div class="panel" data-aos="fade-left">
+                    <p>因为记忆是很珍贵的东西，所以我会写日记将它们保存下来。</p>
+                    <p>唔...虽然有点胆小，但我还是会努力为大家带来笑容的！</p>
+                    <p>最喜欢小鱼干和风铃草！现在知道该送我什么礼物了吧～</p>
+                    <p style="font-size:10px">（当然也喜欢主人哦）</p>
+                </div>
+            </div>
+        </section>
+    
+    </section>
+
+    <!-- When load finished jump to top -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+            }, 0);
+        };
+    </script>
+</body>
+<!-- Load JS -->
+<script src="app.js"></script>

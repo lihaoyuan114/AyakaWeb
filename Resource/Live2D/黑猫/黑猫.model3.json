@@ -1,0 +1,32 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "黑猫.moc3",
+		"Textures": [
+			"黑猫.4096/texture_00.png",
+			"黑猫.4096/texture_01.png",
+			"黑猫.4096/texture_02.png",
+			"黑猫.4096/texture_03.png",
+			"黑猫.4096/texture_04.png",
+			"黑猫.4096/texture_05.png",
+			"黑猫.4096/texture_06.png"
+		],
+		"Physics": "黑猫.physics3.json",
+		"DisplayInfo": "黑猫.cdi3.json"
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": []
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"ParamEyeLOpen",
+				"ParamEyeROpen"
+			]
+		}
+	]
+}

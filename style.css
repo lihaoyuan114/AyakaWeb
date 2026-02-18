@@ -1,0 +1,247 @@
+/* 白色圆角面板样式 */
+.panel {
+    position: relative;
+    z-index: 2; /* 确保在遮罩层上面 */
+    background: #FFFFFF !important; /* 纯实心白色 */
+    border-radius: 24px;
+    padding: 40px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+.title, #live2d-canvas {
+    position: relative;
+    z-index: 2;
+}
+
+/* 鼠标悬停交互，增加灵动感 */
+.panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(255, 133, 192, 0.2);
+}
+
+.panels-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    max-width: 500px; /* 限制宽度，防止文字太长不好看 */
+}
+
+.zcool-kuaile-regular {
+  font-family: "ZCOOL KuaiLe", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.title {
+  padding-top:15%;
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 4.5rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3); /* 让文字在复杂背景下更清晰 */
+  color: white;
+}
+
+/* Reset to avoid white gaps/borders around full-bleed images */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Ensure images don't show default borders/outlines */
+img, a img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  outline: none;
+}
+
+/* 1. 全屏背景设置 */
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: flex-start; 
+    min-height: 100vh; 
+    height: auto; 
+    gap: 80px; 
+    padding: 100px 20px;
+    /* 关键：给背景增加一个 z-index 基础 */
+    z-index: 0;
+    background: var(--hero-bg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 3. 底部箭头定位 */
+.scroll-down {
+  position: absolute;
+  bottom: 30px; /* 距离底部 30px */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  
+  /* 绑定闪烁动画 */
+  animation: blink 2s infinite; 
+}
+
+/* 4. 定义闪烁动画 */
+@keyframes blink {
+  0% {
+    opacity: 0.3;
+    transform: translate(-50%, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, 10px); /* 伴随轻微上下浮动，更灵动 */
+  }
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, 0);
+  }
+}
+
+.content-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;      /* 确保左边是猫，右边是文字 */
+  justify-content: center;  /* 整体水平居中 */
+  align-items: center;      /* 垂直居中 */
+  padding: 50px 20px;
+  gap: 80px; /* 拉开猫和面板的距离，不要太拥挤 */
+  perspective: 1000px; /* 为 AOS 动画增加 3D 深度感 */
+  background: transparent !important; /* 强制透明 */
+}
+
+.ayaka-bg-container {
+    position: absolute;
+    /* 让容器稍微偏大一些，防止旋转后露出边缘 */
+    top: 10%;
+    left: -10%; 
+    width: 120%; 
+    
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+    opacity: 0.5;
+    
+    /* 核心：斜向旋转 */
+    /* -15deg 是向左上方倾斜，你可以根据喜好调成 -10deg 或 -20deg */
+    transform: rotate(-15deg); 
+    
+    mix-blend-mode: overlay;
+    /* 增加平滑的动画感 */
+    animation: floatingSlant 8s ease-in-out infinite;
+}
+
+/* 空心文字样式 */
+.ayaka-stroke-text {
+    font-family: "Arial Black", sans-serif;
+    font-size: 15rem; /* 稍微再大一点 */
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 3px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    
+    /* 让字母之间更紧凑 */
+    letter-spacing: -5px; 
+    line-height: 0.8;
+    white-space: nowrap;
+    
+    /* 错落感：让每一行 AYAKA 有点左右位移 */
+    padding-left: 50px;
+}
+
+.ayaka-stroke-text:nth-child(2) {
+    padding-left: 200px;
+}
+
+@keyframes floatingSlant {
+    0%, 100% { transform: rotate(-15deg) translate(0, 0); }
+    50% { transform: rotate(-15deg) translate(20px, 10px); }
+}
+
+/* 确保 Canvas 在文字之上 */
+#live2d-canvas {
+    position: relative;
+    z-index: 2 !important;  /* 确保猫在文字前面 */
+    /* 其他原本的样式保持不变 */
+}
+
+/* 描述文字样式 */
+.description {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+/* 占位装饰 */
+.placeholder-box {
+    margin-top: 40px;
+    width: 100%;
+    height: 200px;
+    background: #ffe4e1;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ffb6c1;
+    color: #ff85a2;
+}
+
+.panel h2 {
+  font-family: "ZCOOL KuaiLe", sans-serif;
+  font-size: 2.2rem;
+  margin-bottom: 1.2rem;
+  
+  /* 渐变色文字 */
+  background: linear-gradient(45deg, #ff85a2, #ffb6c1);
+  -webkit-background-clip: text; /* 必须保留前缀 */
+  background-clip: text;         /* 标准写法 */
+  -webkit-text-fill-color: transparent;
+  color: #ff85a2; /* 兜底颜色 */
+}
+
+#glass-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; 
+    z-index: 1; /* 必须在背景(0)之上，内容(2)之下 */
+    background: rgba(255, 255, 255, 0); 
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    transition: background 0.2s ease, backdrop-filter 0.2s ease;
+}
+
+.title, .content-section, .scroll-down {
+    position: relative;
+    z-index: 2; /* 高于 glass-overlay */
+}
+
+.panel p {
+  color: #555;
+  line-height: 1.8;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* 针对小字的特别修饰 */
+.small-text {
+  font-size: 12px;
+  color: #ffb6c1;
+  opacity: 0.8;
+  margin-top: 15px !important;
+  display: block;
+}
