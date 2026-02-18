@@ -80,16 +80,23 @@ img, a img {
 
 /* 3. 底部箭头定位 */
 .scroll-down {
-  position: absolute;
-  bottom: 30px; /* 距离底部 30px */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  cursor: pointer;
-  color: white;
-  
-  /* 绑定闪烁动画 */
-  animation: blink 2s infinite; 
+    /* 1. 脱离普通排队，锁定在底部 */
+    position: absolute; 
+    bottom: -160px; 
+    left: 50%;
+    transform: translateX(-50%); /* 精确水平居中 */
+    
+    /* 2. 确保它在最前面 */
+    z-index: 10; 
+    
+    /* 3. 样式微调 */
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+
+    /* 你的闪烁动画保持不变 */
+    animation: blink 2s infinite; 
 }
 
 /* 4. 定义闪烁动画 */
