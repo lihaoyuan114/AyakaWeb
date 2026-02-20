@@ -26,6 +26,14 @@
             once: false,
         });
     </script>
+    <!-- When load finished jump to top -->
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+            }, 0);
+        };
+    </script>
 
     <section class="hero" style="--hero-bg: url('Resource/Image/BackGround2.png')">
         <!-- Glass effect -->
@@ -65,18 +73,147 @@
             </div>
         </section>
 
+        <br style="margin-top:30px">
+        <!-- Memory -->
+        <section class="diary-section">
+            <h2 data-aos="fade-in" class="zcool-kuaile-regular diary-main-title">绫香的日记本 =w=</h2>
+
+            <div class="diary-container">
+                <div class="diary-item left-card" data-aos="fade-right">
+                    <div class="panel">
+                        <h3 class="zcool-kuaile-regular">2025.12.24</h3>
+                        <p>平安夜收到了主人的礼物喵～是一个金色的小铃铛，现在每天都挂在领口上呢！(◍•ᴗ•◍)ゞ</p>
+                        <span class="diary-icon">🔔</span>
+                    </div>
+                </div>
+
+                <div class="diary-connector" data-aos="fade-down">
+                    <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+                        <path d="M10,0 Q100,50 190,100" class="dash-line" />
+                    </svg>
+                    <span class="connector-paw">🐾</span>
+                </div>
+
+                <div class="diary-card"> </div>
+
+                <div class="diary-item right-card" data-aos="fade-left">
+                    <div class="panel">
+                        <h3 class="zcool-kuaile-regular">2026.02.16</h3>
+                        <p>今天是我的生日喵！主人为我制作了音乐MV，阿能哥哥送了我一盆风铃草。第一次收到这么多祝福，感觉心里暖暖的～(◍•ᴗ•◍)</p>
+                        <span class="diary-icon">🎂</span>
+                    </div>
+                </div>
+
+                <div class="diary-connector reversed-line" data-aos="fade-down">
+                    <svg viewBox="0 0 200 100">
+                        <path d="M10,0 Q100,50 190,100" class="dash-line" />
+                    </svg>
+                </div>
+
+                <div class="diary-card"> </div>
+
+                <div class="diary-item left-card" data-aos="fade-right">
+                    <div class="panel">
+                        <h3 class="zcool-kuaile-regular">2024.02.18</h3>
+                        <p>和主人一起装饰网站的第一天喵！虽然只是简单的页面，但想到以后可以在这里记录回忆就觉得很幸福呢。(´･ω･`)</p>
+                        <span class="diary-icon">🐾</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br style="margin-top:50px">
+        <section class="music-section" style="position: relative; z-index: 2;">
+            <h2 data-aos="fade-in" class="zcool-kuaile-regular diary-main-title" style="position: relative; z-index: 3;">
+                绫香的私藏歌单
+            </h2>
+            
+            <div class="music-layout-wrapper">
+                <div class="side-item left-item">
+                    <div class="sticky-note" data-aos="zoom-in">
+                        <div class="tape"></div>
+                        <h4>🐾 绫香的碎碎念</h4>
+                        <p>今天的黑胶唱片</p>
+                        <p>听起来很有质感呢...</p>
+                        <p class="date">2026.02.21</p>
+                    </div>
+                </div>
+
+                <div class="player-container" data-aos="zoom-in">
+                    <div class="album-art">
+                        <div class="vinyl-record">
+                            <div class="vinyl-texture"></div>
+                            <img src="Resource/Image/cover1.jpg" id="current-cover" alt="Cover">
+                        </div>
+                        <div class="stylus"></div> 
+                    </div>
+
+                    <div class="song-info">
+                        <h3 id="song-title">歌曲加载中...</h3>
+                        <p id="artist-name">竹内绫香</p>
+                    </div>
+
+                    <div class="progress-area">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                            <div class="paw-handle">🐾</div> 
+                        </div>
+                        <div class="time">
+                            <span id="current-time">00:00</span>
+                            <span id="total-time">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="controls">
+                        <button id="prev-btn" class="btn">⏮</button>
+                        <button id="play-btn" class="btn play-trigger">▶</button>
+                        <button id="next-btn" class="btn">⏭</button>
+                    </div>
+
+                    <div class="platform-links">
+                        <a id="link-netease" href="#" target="_blank" class="platform-btn netease">
+                            <span class="icon">🎧</span> 网易云
+                        </a>
+                        <a id="link-kugou" href="#" target="_blank" class="platform-btn kugou">
+                            <span class="icon">🐶</span> 酷狗
+                        </a>
+                    </div>
+
+                    <div class="visualizer-container">
+                        <div class="visualizer">
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                    </div>
+                    <audio id="main-audio" src=""></audio>
+                </div>
+
+                <div class="side-item right-item">
+                    <div class="vinyl-rack">
+                        <span class="rack-title">Now Playing</span>
+                        <div class="paws-track">
+                            <div class="paw-print">🐾</div>
+                            <div class="paw-print" style="margin-left:20px">🐾</div>
+                            <div class="paw-print">🐾</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <br style="margin-top:100px">
         <!-- Dev time line -->
         <div class="panels-column">
-            <center><h2 data-aos="zoom-in" style="position:relative; margin-bottom: 60px; z-index: 2; font-family: 'ZCOOL KuaiLe', sans-serif; color:#ffd7e0; text-shadow: #b3717f 2px 2px 3px;">
-                绫香的开发日志=w=</h2></center>
+            <center><h2 data-aos="zoom-in" style="position:relative; margin-bottom: 60px; z-index: 2; font-family: 'ZCOOL KuaiLe', sans-serif;
+            font-size:40px; color:#ffd7e0; text-shadow: #b3717f 2px 2px 3px;">
+                绫香的开发日志～</h2></center>
             
             <div data-aos="fade-down" class="timeline-line"></div>
 
             <div class="panel" data-aos="fade-left">
                 <div class="timeline-dot"></div>
-                <p>2023的某一天，我看到了一个名为<a href="https://www.bilibili.com/video/BV1gm4y1C7oY/" target="_blank">《我用ChatGPT创造了一个数字生命，在QQ群里伪装人类》</a>
-                的视频，我第一次发现AI也能跳出冰冷的对话框，成为一个有血有肉的存在，虽然对自己的能力很不自信，但我还是开始了尝试。
+                <p>2023的某一天，我看到了一个名为<a href="https://www.bilibili.com/video/BV1gm4y1C7oY/" target="_blank">《我用ChatGPT创造了一个数字生命，在QQ群里伪装人类》</a>的视频，我第一次发现AI也能跳出冰冷的对话框，成为一个有血有肉的存在，虽然对自己的能力很不自信，但我还是开始了尝试。
                 </p>
                 <p style="font-size:10px">2023.xx.xx</p>
             </div>
@@ -226,15 +363,6 @@
         </div>
     
     </section>
-
-    <!-- When load finished jump to top -->
-    <script>
-        window.onload = function() {
-            setTimeout(function() {
-                window.scrollTo(0, 0);
-            }, 0);
-        };
-    </script>
 </body>
 <!-- Load JS -->
 <script src="app.js"></script>

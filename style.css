@@ -315,3 +315,432 @@ img, a img {
 .timeline-dot {
     animation: dotPulse 2s infinite;
 }
+
+/* 日记区整体布局 */
+.diary-section {
+    position: relative;
+    z-index: 2; /* 确保在毛玻璃之上 */
+    width: 100%;
+    padding: 80px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 修复后的日记标题 */
+.diary-main-title {
+    position: relative;
+    z-index: 5;
+    font-size: 3.5rem;
+    color: #fff;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin-bottom: 60px;
+}
+
+.diary-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0 20px;
+}
+
+/* 卡片基础样式 */
+.diary-item {
+    width: 100%;
+    display: flex;
+}
+
+/* 靠左的卡片 */
+.left-card { justify-content: flex-start; }
+.left-card .panel { transform: rotate(-1.5deg); } /* 稍微左倾 */
+
+/* 靠右的卡片 */
+.right-card { justify-content: flex-end; }
+.right-card .panel { transform: rotate(1.5deg); } /* 稍微右倾 */
+
+/* 强化面板样式 */
+.diary-item .panel {
+    max-width: 420px;
+    background: #fff !important;
+    border-radius: 2px; /* 改为微小的圆角，更像纸张 */
+    padding: 40px 30px;
+    position: relative;
+    /* 纸张阴影：多层阴影营造厚度感 */
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1), 0 0 20px rgba(255,182,193,0.1);
+    /* 底部装饰：信纸横线效果 */
+    background-image: radial-gradient(#eee 10%, transparent 10%);
+    background-size: 20px 20px;
+    background-position: 0 0;
+    /* 核心：添加过渡效果，时间设为 0.4s 左右最丝滑 */
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+                box-shadow 0.4s ease;
+    
+    /* 确保放大时不会被截断 */
+    will-change: transform;
+}
+
+.diary-item .panel::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.5); /* 半透明胶带 */
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    z-index: 3;
+}
+
+.diary-item .panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 30px 30px 0 0;
+    border-color: #ffb6c1 transparent transparent transparent;
+    opacity: 0.3;
+}
+
+.diary-item h3 {
+    border-bottom: 2px dashed #ffb6c1;
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.diary-item .panel:hover {
+    transform: rotate(0deg) scale(1.05); /* 鼠标经过时变正并放大 */
+    z-index: 10;
+}
+
+.diary-item .panel::before {
+    transition: opacity 0.3s ease;
+}
+
+.diary-item:hover .panel::before {
+    opacity: 0.8; /* 悬停时胶带稍微明显一点点 */
+}
+
+.diary-item:hover .panel {
+    transform: rotate(0deg) scale(1.08); 
+    
+    /* 增加阴影深度，制造“浮起来”的立体感 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    
+    z-index: 10;
+}
+
+/* 装饰性小图标 */
+.diary-icon {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    font-size: 1.5rem;
+    opacity: 0.4;
+}
+
+.diary-section .panel p {
+    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 100% 2em; /* 模拟信纸横线 */
+    line-height: 2em;
+    padding-top: 0.5em;
+}
+
+.diary-section::before {
+    content: "MEMORIES";
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+    font-size: 15rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.1); /* 极淡的文字水印 */
+    z-index: 0;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* ================================================= */
+/* --- 1. 播放页总容器 (针对 music-section) --- */
+/* ================================================= */
+.music-section {
+    position: relative;
+    z-index: 2;          /* 响应要求：设定基础层级 */
+    padding: 80px 0;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;    /* 防止侧边装饰溢出产生滚动条 */
+}
+
+/* 页面大标题修复 */
+.diary-main-title {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;         /* 确保标题在最顶层 */
+}
+
+/* ================================================= */
+/* --- 2. 布局包装层 (左右不挤压的关键) --- */
+/* ================================================= */
+.music-layout-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center; /* 确保中间的播放器水平居中 */
+    align-items: center;     /* 垂直方向对齐 */
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 600px;       /* 给内容预留高度 */
+}
+
+/* ================================================= */
+/* --- 3. 播放器主体 (player-container) --- */
+/* ================================================= */
+.player-container {
+    flex: 0 0 380px;         /* 严格锁定播放器宽度，不随内容伸缩 */
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 35px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* --- 黑胶唱片及唱针 --- */
+.album-art {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 30px;
+}
+
+.vinyl-record {
+    width: 100%;
+    height: 100%;
+    background: #111;
+    border-radius: 50%;
+    position: relative;
+    border: 6px solid #222;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vinyl-texture {
+    position: absolute;
+    inset: 0;
+    background: repeating-radial-gradient(circle, #222 0%, #111 2px, #222 4px);
+    opacity: 0.6;
+    z-index: 1;
+}
+
+.vinyl-record img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    border: 4px solid #000;
+    animation: rotateDisk 12s linear infinite;
+    animation-play-state: paused;
+}
+
+.stylus {
+    width: 18px;
+    height: 100px;
+    background: #f0f0f0;
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    transform-origin: top center;
+    transform: rotate(-35deg);
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    border-radius: 6px;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+}
+
+/* 播放状态动画控制 */
+.playing .vinyl-record img { animation-play-state: running; }
+.playing .stylus { transform: rotate(-5deg); }
+
+@keyframes rotateDisk {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* --- 进度条与猫爪 --- */
+.progress-area { margin: 25px 0; }
+.progress-bar {
+    height: 10px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+}
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #ffb6c1, #ff85a2);
+    border-radius: 12px;
+    width: 0%;
+}
+.paw-handle {
+    position: absolute;
+    top: -10px;
+    left: 0%;
+    font-size: 22px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    transition: left 0.1s linear;
+}
+
+/* ================================================= */
+/* --- 4. 侧边装饰件 (side-item) --- */
+/* ================================================= */
+/* 使用绝对定位，挂在布局容器的两侧，防止挤占中间空间 */
+.side-item {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    transition: all 0.5s ease;
+}
+
+/* 左侧便利贴定位 */
+.left-item {
+    left: 2%; /* 距离中心播放器有一定空间 */
+}
+
+/* 右侧装饰定位 */
+.right-item {
+    right: 5%;
+}
+
+/* 便利贴美化 */
+.sticky-note {
+    background: #fff9c4;
+    padding: 22px;
+    width: 200px;
+    transform: rotate(-4deg);
+    box-shadow: 12px 12px 35px rgba(0,0,0,0.08);
+    border-radius: 2px;
+    color: #5d4037;
+    font-family: 'STKaiti', 'KaiTi', serif; /* 增加手写感字体 */
+    line-height: 1.8;
+}
+
+.tape {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* 右侧垂直标语 */
+.rack-title {
+    writing-mode: vertical-rl;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 18px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.2);
+}
+
+/* ================================================= */
+/* --- 5. 其他组件及响应式 --- */
+/* ================================================= */
+.controls { display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 25px; }
+.btn { background: none; border: none; font-size: 1.8rem; color: #ff85a2; cursor: pointer; transition: 0.3s; }
+.btn:hover { transform: scale(1.2); filter: brightness(1.1); }
+.play-trigger { font-size: 3rem; }
+
+.platform-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+.platform-btn {
+    text-decoration: none; font-size: 0.85rem; padding: 8px 16px; border-radius: 25px;
+    color: white; display: flex; align-items: center; gap: 6px; transition: 0.3s;
+}
+.netease { background: #e60026; box-shadow: 0 4px 12px rgba(230,0,38,0.2); }
+.kugou { background: #00a1e9; box-shadow: 0 4px 12px rgba(0,161,233,0.2); }
+
+/* 频谱动画 */
+.visualizer-container { height: 45px; display: flex; justify-content: center; align-items: flex-end; gap: 5px; }
+.visualizer span { width: 6px; height: 20%; background: #ffb6c1; border-radius: 3px; }
+.playing .visualizer span { animation: barMove 0.8s infinite ease-in-out; }
+@keyframes barMove {
+    0%, 100% { height: 20%; }
+    50% { height: 100%; }
+}
+
+.diary-connector {
+    width: 100%;
+    height: 150px; /* 增加间距让连线更长、更明显 */
+    position: relative;
+    margin: -20px 0; /* 让连线稍微叠在卡片边缘，更有连接感 */
+    overflow: visible;
+}
+
+.diary-connector svg {
+    width: 100%;
+    height: 100%;
+}
+
+.dash-line {
+    fill: none;
+    stroke: #ffb6c1; /* 明显的粉色 */
+    stroke-width: 2; /* 加粗线条 */
+    stroke-dasharray: 12, 12; /* 明显的虚线间隙 */
+    stroke-linecap: round;
+    /* 增加外发光，防止被背景模糊掉 */
+    filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.8));
+    opacity: 0.6;
+}
+
+/* 装饰性猫爪，定位于虚线中间 */
+.connector-paw {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(15deg);
+    font-size: 1.5rem;
+    color: #ffb6c1;
+    opacity: 0.4;
+    filter: drop-shadow(0 0 3px white);
+}
+
+/* 让奇数和偶数的连线方向相反，避免单调 */
+.diary-item:nth-child(even) .diary-connector svg {
+    transform: scaleX(-1); /* 水平翻转，形成 S 型交替 */
+}
+
+/* 水平反转（镜像） */
+.reversed-line svg {
+    transform: scaleX(-1);
+}
+
+a:link, 
+a:visited, 
+a:hover, 
+a:active {
+    color: rgb(83, 83, 141); /* 将 blue 替换为你想要的颜色，例如 black 或 #000000 */
+    text-decoration: none; /* (可选) 去除下划线 */
+}
