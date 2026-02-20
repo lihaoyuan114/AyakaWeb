@@ -252,3 +252,66 @@ img, a img {
   margin-top: 15px !important;
   display: block;
 }
+
+/* 1. 确保面板列这个容器是定位基准 */
+.panels-column {
+    position: relative;
+    padding-left: 60px; /* 关键：给左侧的线和圆点留出呼吸空间 */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* 2. 绘制那条消失的线 */
+.timeline-line {
+    position: absolute;
+    left: 28px;        /* 调整这个值让线穿过圆点的中心 */
+    top: 0;
+    bottom: 0;         /* 自动延伸到容器底部 */
+    width: 3px;        /* 线条宽度 */
+    background: rgba(255, 255, 255, 0.6); /* 半透明白色，图里背景亮，这个颜色很高级 */
+    z-index: 1;        /* 在面板后方 */
+    border-radius: 2px;
+}
+
+/* 3. 装饰圆点（对应图里的粉色小圆圈） */
+.timeline-dot {
+    position: absolute;
+    left: -40px;       /* 相对于实心 panel 向左偏移 */
+    top: 35px;         /* 对齐标题高度 */
+    width: 14px;
+    height: 14px;
+    background: #ff85a2; /* 这种粉色和图里的标题颜色一致 */
+    border: 3px solid #fff;
+    border-radius: 50%;
+    z-index: 3;
+    box-shadow: 0 0 10px rgba(255, 133, 162, 0.5);
+}
+
+/* 4. 确保面板本身不会挡住线 */
+.panel {
+    position: relative;
+    z-index: 2;
+    background: #FFFFFF !important;
+    /* 其他圆角和阴影保持你现在的样子就好 */
+}
+
+@keyframes lineGrow {
+    from { height: 0; }
+    to { height: 100%; }
+}
+
+.timeline-line {
+    animation: lineGrow 2s ease-out forwards;
+    transform-origin: top;
+}
+
+@keyframes dotPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 133, 162, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 133, 162, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 133, 162, 0); }
+}
+
+.timeline-dot {
+    animation: dotPulse 2s infinite;
+}
