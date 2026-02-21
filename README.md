@@ -16,8 +16,8 @@ It serves as her online presence and central information hub.
 
 * Personal homepage
 * Project showcase
-* Blog / articles
 * Gallery
+* Live2D display
 
 ---
 
