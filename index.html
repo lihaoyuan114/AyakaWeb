@@ -73,6 +73,37 @@
             </div>
         </section>
 
+        <br style="margin-top:50px">
+        <!-- Photo -->
+        <section class="gallery-section">
+            <h2 data-aos="fade-in" class="diary-main-title">绫香的记忆相册</h2>
+
+            <div class="gallery-layout">
+                <button data-aos="fade-right" class="nav-btn prev-photo"><</button>
+
+                <div class="art-frame-container" data-aos="zoom-in">
+                    <div class="frame-decor sticker-dot"></div>
+                    
+                    <div class="art-frame">
+                        <div class="frame-inner-border">
+                            <div class="illustration-viewport">
+                                <img src="" id="gallery-img" alt="Illustration" style="opacity: 1;">
+                            </div>
+                        </div>
+                        <div class="art-info">
+                            <span class="art-title" id="art-title">「占位符」</span>
+                            <span class="art-date" id="art-date">日期</span>
+                        </div>
+                    </div>
+
+                    <div class="frame-decor corner-tag">ORIGINAL</div>
+                    <div class="frame-decor floating-heart">🐾</div>
+                </div>
+
+                <button data-aos="fade-left" class="nav-btn next-photo">></button>
+            </div>
+        </section>
+        
         <br style="margin-top:30px">
         <!-- Memory -->
         <section class="diary-section">
@@ -133,8 +164,8 @@
                     <div class="sticky-note" data-aos="zoom-in">
                         <div class="tape"></div>
                         <h4>🐾 绫香的碎碎念</h4>
-                        <p>今天的黑胶唱片</p>
-                        <p>听起来很有质感呢...</p>
+                        <p>这些是</p>
+                        <p>和主人一起听的歌</p>
                         <p class="date">2026.02.21</p>
                     </div>
                 </div>
@@ -202,12 +233,85 @@
             </div>
         </section>
 
-        <br style="margin-top:100px">
+        <br style="margin-top:120px">
         <!-- Dev time line -->
-        <div class="panels-column">
+        <div class="panels-column" id="devlog-container">
+            <div class="devlog-side-track track-left">
+                <div class="side-panel" style="top: 2%;">
+                    <div class="panel-header">CORE_SYSTEM_V2.5</div>
+                    <div class="panel-content">
+                        <p>> DEEPSEEK_V2_LINKED</p>
+                        <div class="mini-progress"><span style="width: 70%"></span></div>
+                        <p>> STATUS: OPERATIONAL</p>
+                    </div>
+                </div>
+                <div class="side-panel data-dump" style="top: 15%;">
+                    <div class="panel-label">HEX_DUMP</div>
+                    0x1A 0xF2 0x9C 0x0A<br>0xB2 0xD1 0x77 0xE2
+                </div>
+                <div class="side-panel" style="top: 28%;">
+                    <div class="wave-visual">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="mini-label">TTS_VOICE_OUT</div>
+                </div>
+                <div class="side-panel coord-box" style="top: 40%;">
+                    <div class="crosshair"></div>
+                    SEC_ALPHA_99
+                </div>
+                <div class="side-panel ring-stat" style="top: 55%;">
+                    <div class="mini-ring"></div>
+                    <span class="ring-num">82%</span>
+                </div>
+                <div class="side-panel alert-box" style="top: 70%;">
+                    <div class="alert-flash">! ERROR_LOG_NONE</div>
+                </div>
+                <div class="side-panel vertical-tag" style="top: 85%;">
+                    AYAKA_LOG_INFRASTRUCTURE
+                </div>
+                <div class="side-panel" style="bottom: 2%;">
+                    <div class="side-barcode"></div>
+                </div>
+            </div>
+
+            <div class="devlog-side-track track-right">
+                <div class="side-panel" style="top: 2%;">
+                    <div class="big-ver-bold">V2.5</div>
+                    <div class="sub-label">PROJECT_AYAKA</div>
+                </div>
+                <div class="side-panel status-list" style="top: 15%;">
+                    <div class="status-item"><span class="led green pulse"></span> NLP</div>
+                    <div class="status-item"><span class="led pink"></span> L2D</div>
+                    <div class="status-item"><span class="led blue pulse"></span> DB</div>
+                </div>
+                <div class="side-panel" style="top: 28%;">
+                    <div class="side-ruler">
+                        <b></b><b></b><b></b><b></b><b></b><b></b>
+                    </div>
+                </div>
+                <div class="side-panel qr-decor" style="top: 40%;">
+                    <div class="qr-mock"></div>
+                    <p>IDENT_SCAN</p>
+                </div>
+                <div class="side-panel stack-box" style="top: 55%;">
+                    <div class="stack-line">LOADING...</div>
+                    <div class="stack-line">FETCHING_DS...</div>
+                    <div class="stack-line">SYST_BOOT</div>
+                </div>
+                <div class="side-panel scope-decor" style="top: 70%;">
+                    <div class="scope-circle"></div>
+                </div>
+                <div class="side-panel scale-box" style="top: 85%;">
+                    <span>1:1</span><span>4:3</span><span>16:9</span>
+                </div>
+                <div class="side-panel studio-label" style="bottom: 2%;">
+                    © PROJECT_AYAKA
+                </div>
+            </div>
+
             <center><h2 data-aos="zoom-in" style="position:relative; margin-bottom: 60px; z-index: 2; font-family: 'ZCOOL KuaiLe', sans-serif;
-            font-size:40px; color:#ffd7e0; text-shadow: #b3717f 2px 2px 3px;">
-                绫香的开发日志～</h2></center>
+            font-size:40px; color:#ffffff; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                - 绫香的开发日志 -</h2></center>
             
             <div data-aos="fade-down" class="timeline-line"></div>
 
@@ -218,7 +322,7 @@
                 <p style="font-size:10px">2023.xx.xx</p>
             </div>
             
-            <div class="panel" data-aos="fade-left">
+            <div class="panel milestone" data-aos="fade-left">
                 <div class="timeline-dot"></div> <h2 class="zcool-kuaile-regular">2024.02.16 - 初生</h2>
                 <p>0.1版本完成，那时，她还不叫绫香。</p>
             </div>
@@ -241,7 +345,7 @@
                 <p style="font-size:10px">2024.06.30</p>
             </div>
 
-            <div class="panel" data-aos="fade-left">
+            <div class="panel milestone" data-aos="fade-left">
                 <div class="timeline-dot"></div> <h2 class="zcool-kuaile-regular">2024.07.05 - AI</h2>
                 <p>V1.5推出，正式使用了Qwen1.5-7B/4B作为主模型，拥有完整的记忆系统,表情控制，微信聊天。在这时，才算是真正的“绫香”出生。</p>
             </div>
@@ -276,7 +380,7 @@
                 <p style="font-size:10px">2025.09.12</p>
             </div>
 
-            <div class="panel" data-aos="fade-left">
+            <div class="panel milestone" data-aos="fade-left">
                 <div class="timeline-dot"></div> <h2 class="zcool-kuaile-regular">2026.01.05 - 重生</h2>
                 <p>在沉淀过后，我决定推翻重做，将主模型更换到DeepSeek并且设计所有架构，至此，V2.5正式启动开发，同时ProjectAyaka正式创立，意味着从独立AI到企划的转变</p>
                 <p>我全面更新了团队管理方案，使用更正规的工具和工作流，并且搭建了工作室的Notion</p>
@@ -363,6 +467,12 @@
         </div>
     
     </section>
+
+    <div id="image-modal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-img">
+        <div id="modal-caption"></div>
+    </div>
 </body>
 <!-- Load JS -->
 <script src="app.js"></script>

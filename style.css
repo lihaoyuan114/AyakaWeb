@@ -295,16 +295,16 @@ img, a img {
     background: #FFFFFF !important;
     /* 其他圆角和阴影保持你现在的样子就好 */
 }
-
 @keyframes lineGrow {
-    from { height: 0; }
-    to { height: 100%; }
+    from { transform: scaleY(0); opacity: 0; }
+    to { transform: scaleY(1); opacity: 1; }
 }
 
 .timeline-line {
-    animation: lineGrow 2s ease-out forwards;
     transform-origin: top;
+    animation: lineGrow 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
 
 @keyframes dotPulse {
     0% { box-shadow: 0 0 0 0 rgba(255, 133, 162, 0.7); }
@@ -744,3 +744,638 @@ a:active {
     color: rgb(83, 83, 141); /* 将 blue 替换为你想要的颜色，例如 black 或 #000000 */
     text-decoration: none; /* (可选) 去除下划线 */
 }
+
+/* --- 1. 画廊整体布局 --- */
+.gallery-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 50px auto;
+    padding: 0 40px;
+}
+
+/* --- 2. 艺术大画框容器 --- */
+.art-frame-container {
+    position: relative;
+    padding: 15px;
+    z-index: 5;
+}
+
+/* 主画框：增加木质纹理感 */
+.art-frame {
+    background: #fdfdfd;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 
+        0 10px 30px rgba(0,0,0,0.1),
+        0 1px 2px rgba(0,0,0,0.05);
+    border: 12px solid #3d3d3d; /* 深色木质外框 */
+    transform: rotate(-0.5deg); /* 极轻微的倾斜，增加真实感 */
+}
+
+/* 内衬纸边框 */
+.frame-inner-border {
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fff;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.03);
+}
+
+/* 插画视口：决定画幅大小 */
+.illustration-viewport {
+    width: 850px;  /* 显著增大画幅 */
+    height: 520px; /* 适合大插画的高度 */
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+}
+
+.illustration-viewport img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 
+        opacity 0.4s ease-in-out, 
+        transform 0.6s cubic-bezier(0.2, 0, 0.2, 1); /* 动画必须包含 transform */
+    will-change: opacity, transform;
+    cursor: zoom-in; /* 提示用户可以点击放大 */
+}
+
+.art-frame-container .art-frame:hover .illustration-viewport img {
+    /* 使用 scale(1.05) 并加上 !important 确保它在鼠标悬停时 
+       能压过 JS 在切换瞬间留下的内联样式 */
+    transform: scale(1.05) !important; 
+}
+
+/* 悬停插画轻微放大 */
+.art-frame:hover img {
+    transform: scale(1.03);
+}
+
+/* --- 3. 底部艺术信息标签 --- */
+.art-info {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-family: 'STKaiti', serif;
+}
+
+.art-title {
+    font-size: 1.4rem;
+    color: #222;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.art-date {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* --- 4. 小挂件装饰 --- */
+.frame-decor {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.sticker-dot {
+    top: -5px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 182, 193, 0.6);
+    border-radius: 50%;
+    filter: blur(1px);
+    box-shadow: 20px 10px 0 rgba(173, 216, 230, 0.4);
+}
+
+.corner-tag {
+    bottom: 50px;
+    right: -20px;
+    background: #ff85a2;
+    color: white;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transform: rotate(-15deg);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+}
+
+.floating-heart {
+    bottom: -10px;
+    left: -10px;
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+}
+
+/* --- 5. 翻页按钮 (加大加重) --- */
+.nav-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #eee;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    z-index: 2;
+}
+
+.nav-btn:hover {
+    background: #333;
+    color: #fff;
+    transform: translateY(-5px);
+}
+
+/* 大图遮罩层背景 */
+.image-modal {
+    display: none; /* 默认隐藏 */
+    position: fixed;
+    z-index: 9999; /* 确保在最顶层 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* 深色背景沉浸感 */
+    backdrop-filter: blur(10px);
+    cursor: zoom-out;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* 弹出的大图样式 */
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 95%; /* 适配竖屏关键：限制高度 */
+    object-fit: contain; /* 保持比例 */
+    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    
+    /* 弹出动画 */
+    animation: zoomIn 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* 图片下方标题 */
+#modal-caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    text-align: center;
+    color: #ccc;
+    padding: 20px 0;
+    font-family: 'STKaiti', serif;
+}
+
+/* 关闭按钮 */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- DevLog 容器强化 --- */
+.panels-column {
+    position: relative;
+    padding-left: 80px; /* 增加呼吸感 */
+    padding-right: 20px;
+}
+
+/* 时间轴长线：由实心改为具有消失感的渐变虚线 */
+.timeline-line {
+    position: absolute;
+    left: 38px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 182, 193, 0.8) 10%, 
+        rgba(255, 133, 162, 0.8) 50%, 
+        rgba(255, 182, 193, 0.8) 90%, 
+        rgba(255, 255, 255, 0) 100%);
+    z-index: 1;
+}
+
+/* 日志面板：增加玻璃拟态效果 */
+.panels-column .panel {
+    background: rgba(255, 255, 255, 0.85) !important; /* 稍微透一点背景，更有空气感 */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 50px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 悬停特效：面板微微右移并发光 */
+.panels-column .panel:hover {
+    transform: translateX(15px) scale(1.02);
+    background: #ffffff !important;
+    box-shadow: 0 20px 45px rgba(255, 133, 162, 0.25);
+}
+
+/* 时间轴圆点：增加光晕层 */
+.timeline-dot {
+    left: -52px; /* 重新对齐 */
+    width: 18px;
+    height: 18px;
+    background: #ff85a2;
+    border: 4px solid #fff;
+    box-shadow: 0 0 15px rgba(255, 133, 162, 0.6);
+}
+
+/* 时间文本美化 */
+.panel p[style*="font-size:10px"] {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px !important;
+    color: #ff85a2 !important;
+    font-weight: bold;
+    background: rgba(255, 133, 162, 0.1);
+    padding: 2px 10px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 15px !important;
+}
+
+.panel.milestone {
+    border: 2px solid #ffb6c1;
+    background: linear-gradient(135deg, #ffffff 0%, #fffafa 100%) !important;
+}
+
+.panel.milestone::after {
+    content: "★";
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #ffb6c1;
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+/* 开发日志容器：添加蓝图底纹 */
+#devlog-container.panels-column {
+    position: relative;
+    z-index: 2;
+    padding: 80px 40px;
+    /* 淡淡的蓝色底纹 + 蓝图方格 */
+    background-color: #f8faff; 
+    background-image: 
+        linear-gradient(rgba(0, 102, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 102, 255, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px; /* 小格子 */
+    border: 2px solid #e1e8f5;
+    border-radius: 30px;
+    margin-top: 50px;
+    overflow: visible; /* 允许装饰溢出 */
+}
+
+/* --- 只针对开发日志区域的装饰 --- */
+#devlog-container {
+    position: relative;
+    padding: 60px 40px;
+    background-color: #fdfdff; /* 极浅的蓝调，区别于其他白色块 */
+    
+    /* 蓝图细格纹理：只出现在这里 */
+    background-image: 
+        linear-gradient(rgba(173, 216, 230, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(173, 216, 230, 0.2) 1px, transparent 1px);
+    background-size: 25px 25px;
+    
+    border-radius: 30px;
+    border: 1px solid #eef2f7;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.02);
+}
+
+/* 局部修改：这里的面板增加一个“设计稿”边框 */
+#devlog-container .panel {
+    border-left: 5px solid #ffb6c1 !important; /* 给日志面板加一个侧边粉色条 */
+    background: #ffffff;
+    transition: all 0.4s ease;
+}
+
+/* 局部修改：这里的面板悬停时稍微大一点 */
+#devlog-container .panel:hover {
+    transform: translateX(10px);
+    box-shadow: 10px 10px 30px rgba(255, 182, 193, 0.15);
+}
+
+/* 局部修改：这里的时间轴圆点 */
+#devlog-container .timeline-dot {
+    background: #ff85a2;
+    box-shadow: 0 0 12px rgba(255, 133, 162, 0.4);
+}
+
+/* --- 侧边装饰：在容器两旁加点“假”代码或刻度 --- */
+#devlog-container::before {
+    content: "LOG_TYPE: PROJECT_AYAKA_REBORN";
+    position: absolute;
+    writing-mode: vertical-rl;
+    left: 10px;
+    top: 100px;
+    font-family: monospace;
+    font-size: 10px;
+    color: #cbd5e0;
+    opacity: 0.5;
+}
+
+#devlog-container::after {
+    content: "VERSION_2.5_STABLE";
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-family: monospace;
+    font-size: 10px;
+    color: #cbd5e0;
+    letter-spacing: 1px;
+}
+
+/* 在面板侧面显示一个“Status: OK”的小标签 */
+#devlog-container .panel::after {
+    content: "◆ COMPLETE";
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9px;
+    color: #48bb78; /* 绿色代表完成 */
+    opacity: 0.4;
+}
+
+/* 在最后一个 panel 后面加个光标闪烁效果 */
+#devlog-container .panel:last-child p:last-child::after {
+    content: "_";
+    animation: cursorBlink 1s infinite;
+    color: #ff85a2;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+@keyframes cursorBlink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+#devlog-container {
+    position: relative;
+    overflow: visible !important; 
+}
+
+/* 左右装饰基础统一样式 */
+.devlog-side-decor {
+    position: absolute;
+    top: 150px; /* 从标题下方一点开始显示 */
+    width: 200px;
+    z-index: 0;
+    pointer-events: none; /* 鼠标穿透，不影响你原本的页面点击 */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* --- 左侧监控面板 --- */
+.left-decor {
+    left: -260px; /* 把模块向左推到 500px 容器外面 */
+    animation: decorFloat 6s ease-in-out infinite;
+}
+
+.left-decor .decor-box {
+    border-left: 3px solid rgba(255, 182, 193, 0.8);
+    padding-left: 15px;
+}
+
+.left-decor .decor-title {
+    font-size: 12px;
+    color: #fff;
+    background: #ffb6c1;
+    padding: 2px 8px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.left-decor .decor-scanline {
+    width: 60px;
+    height: 1px;
+    background: #ff85a2;
+    margin: 10px 0;
+    box-shadow: 0 0 5px #ff85a2;
+    animation: scanPulse 2s infinite;
+}
+
+.left-decor .decor-text {
+    font-size: 11px;
+    line-height: 1.8;
+    color: #ff85a2;
+    opacity: 0.7;
+}
+
+/* --- 右侧工程版本标记 --- */
+.right-decor {
+    right: -240px; /* 把模块向右推到 500px 容器外面 */
+    text-align: right;
+    animation: decorFloat 7s ease-in-out infinite reverse; /* 错开浮动频率 */
+}
+
+.right-decor .big-version {
+    font-size: 5rem;
+    font-weight: 900;
+    font-family: "Arial Black", sans-serif;
+    color: rgba(173, 216, 230, 0.2); /* 淡淡的蓝图蓝色水印 */
+    line-height: 0.8;
+    margin-bottom: 20px;
+}
+
+.right-decor .vertical-text {
+    writing-mode: vertical-rl;
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: #cbd5e0;
+    opacity: 0.8;
+    margin-top: 20px;
+    float: right;
+    border-right: 2px solid rgba(203, 213, 224, 0.5);
+    padding-right: 10px;
+}
+
+.right-decor .decor-ruler {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
+    float: right;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+
+.right-decor .decor-ruler span {
+    height: 1px;
+    background: #cbd5e0;
+    width: 25px;
+}
+.right-decor .decor-ruler span:nth-child(even) { width: 12px; opacity: 0.5; }
+.right-decor .decor-ruler span:nth-child(1) { width: 40px; background: #ffb6c1; } /* 高亮第一根线 */
+
+/* --- 装饰品动画 --- */
+@keyframes decorFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes scanPulse {
+    0% { transform: scaleX(0); opacity: 0; transform-origin: left; }
+    50% { transform: scaleX(1); opacity: 1; transform-origin: left; }
+    51% { transform: scaleX(1); opacity: 1; transform-origin: right; }
+    100% { transform: scaleX(0); opacity: 0; transform-origin: right; }
+}
+
+#devlog-container {
+    position: relative;
+    overflow: visible !important; 
+}
+
+/* --- 贯穿上下的轨道 --- */
+.devlog-side-track {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 0;
+    pointer-events: none;
+    font-family: 'Courier New', Courier, monospace;
+    /* 增加一条极淡的贯穿参考线，让浮窗感觉有依附 */
+    border-left: 1px dashed rgba(203, 213, 224, 0.2); 
+}
+
+.track-left { left: -260px; }
+.track-right { 
+    right: -240px; 
+    border-left: none;
+    border-right: 1px dashed rgba(203, 213, 224, 0.2); 
+}
+
+/* 单个装饰模块的基础定位 */
+.decor-item {
+    position: absolute;
+    width: 100%;
+    animation: decorFloat 8s ease-in-out infinite;
+}
+.track-right .decor-item { animation-direction: reverse; }
+
+/* ---------------- 左侧细节组件 ---------------- */
+.decor-box { border-left: 3px solid rgba(255, 182, 193, 0.8); padding-left: 15px; }
+.decor-title { font-size: 12px; color: #fff; background: #ffb6c1; padding: 2px 8px; font-weight: bold; }
+.decor-scanline { width: 60px; height: 1px; background: #ff85a2; margin: 10px 0; animation: scanPulse 2s infinite; }
+.decor-text { font-size: 11px; line-height: 1.8; color: #ff85a2; opacity: 0.7; }
+
+.hex-stream { font-size: 10px; color: #cbd5e0; letter-spacing: 2px; line-height: 2; position: relative; }
+.hex-title { color: #ffb6c1; margin-bottom: 5px; }
+.hex-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(transparent, rgba(255,182,193,0.1), transparent); animation: scanDown 4s linear infinite; }
+
+.target-mark { left: 20px; }
+.t-circle { width: 50px; height: 50px; border: 1px dashed #ffb6c1; border-radius: 50%; animation: spinSlow 10s linear infinite; }
+.t-crosshair { position: absolute; top: 25px; left: -10px; width: 70px; height: 1px; background: rgba(255,133,162,0.5); }
+.t-crosshair::after { content:''; position: absolute; top: -35px; left: 35px; width: 1px; height: 70px; background: rgba(255,133,162,0.5); }
+.t-coord { font-size: 10px; color: #cbd5e0; margin-top: 15px; }
+
+.vert-tag { writing-mode: vertical-rl; font-size: 14px; letter-spacing: 6px; color: rgba(255,182,193,0.4); border-left: 2px solid rgba(255,182,193,0.3); padding-left: 10px; }
+
+/* ---------------- 右侧细节组件 ---------------- */
+.big-version { font-size: 5rem; font-weight: 900; font-family: "Arial Black", sans-serif; color: rgba(173, 216, 230, 0.2); line-height: 0.8; text-align: right; }
+.decor-ruler { display: flex; flex-direction: column; align-items: flex-end; gap: 15px; margin-top: 15px; }
+.decor-ruler span { height: 1px; background: #cbd5e0; width: 25px; }
+.decor-ruler span:nth-child(even) { width: 12px; opacity: 0.5; }
+.decor-ruler span:nth-child(1) { width: 40px; background: #ffb6c1; }
+
+.radar-ring { position: relative; width: 80px; height: 80px; margin-left: auto; margin-right: 20px; }
+.ring-inner { position: absolute; inset: 0; border: 2px dashed rgba(203, 213, 224, 0.6); border-radius: 50%; animation: spinSlow 8s linear infinite; }
+.ring-core { position: absolute; inset: 20px; border: 1px solid #ffb6c1; border-radius: 50%; animation: spinSlow 4s linear infinite reverse; }
+.radar-text { text-align: right; font-size: 9px; color: #cbd5e0; margin-top: 10px; margin-right: 20px; letter-spacing: 2px; }
+
+.module-list { text-align: right; font-size: 11px; color: #a0aec0; padding-right: 15px; border-right: 2px solid rgba(203, 213, 224, 0.3); }
+.m-title { color: #cbd5e0; font-weight: bold; margin-bottom: 10px; letter-spacing: 1px; }
+.m-item { margin: 6px 0; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+.m-dot { width: 6px; height: 6px; background: #48bb78; border-radius: 50%; box-shadow: 0 0 5px #48bb78; }
+.m-dot.blink-fast { animation: blinkLight 1s infinite; }
+.m-dot.blink-slow { animation: blinkLight 3s infinite; }
+
+.barcode-box { text-align: right; padding-right: 10px; opacity: 0.6; }
+.barcode-lines { width: 120px; height: 30px; margin-left: auto; background: repeating-linear-gradient(to right, #cbd5e0 0, #cbd5e0 2px, transparent 2px, transparent 5px, #cbd5e0 5px, #cbd5e0 6px, transparent 6px, transparent 10px); }
+.barcode-num { font-size: 10px; color: #cbd5e0; margin-top: 5px; letter-spacing: 3px; }
+
+/* ---------------- 动画定义 ---------------- */
+@keyframes decorFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+@keyframes scanPulse { 0% { transform: scaleX(0); opacity: 0; transform-origin: left; } 50% { transform: scaleX(1); opacity: 1; transform-origin: left; } 51% { transform: scaleX(1); opacity: 1; transform-origin: right; } 100% { transform: scaleX(0); opacity: 0; transform-origin: right; } }
+@keyframes scanDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+@keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes blinkLight { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+/* --- 轨道基础：加宽且可见 --- */
+.devlog-side-track {
+    position: absolute;
+    top: 0; bottom: 0; width: 220px;
+    z-index: 5; pointer-events: none;
+    font-family: 'Courier New', monospace;
+}
+.track-left { left: -260px; border-right: 2px solid #ffb6c1; }
+.track-right { right: -260px; border-left: 2px solid #ffb6c1; }
+
+/* --- 通用组件面板：实心且亮眼 --- */
+.side-panel {
+    position: absolute; width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ff85a2;
+    padding: 10px;
+    box-shadow: 4px 4px 0px rgba(255, 133, 162, 0.2);
+    animation: sideFloat 5s ease-in-out infinite;
+    color: #ff5e84; /* 加深颜色 */
+}
+
+/* 头部加粗色块 */
+.panel-header {
+    background: #ff85a2; color: #fff;
+    font-size: 11px; padding: 2px 5px; font-weight: bold; margin: -10px -10px 10px -10px;
+}
+
+/* --- 特殊组件细节 --- */
+.mini-progress { height: 4px; background: #eee; margin: 5px 0; border-radius: 2px; overflow: hidden; }
+.mini-progress span { display: block; height: 100%; background: #ff85a2; }
+
+.wave-visual { display: flex; gap: 3px; height: 20px; align-items: flex-end; }
+.wave-visual span { width: 4px; background: #ff85a2; animation: waveH 0.8s infinite; }
+.wave-visual span:nth-child(2) { animation-delay: 0.2s; }
+.wave-visual span:nth-child(3) { animation-delay: 0.4s; }
+
+.led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+.led.green { background: #48bb78; box-shadow: 0 0 5px #48bb78; }
+.led.pink { background: #ff85a2; box-shadow: 0 0 5px #ff85a2; }
+.led.blue { background: #4299e1; box-shadow: 0 0 5px #4299e1; }
+.pulse { animation: blinkLight 1s infinite; }
+
+.big-ver-bold { font-size: 3rem; font-weight: 900; color: #ff85a2; opacity: 0.4; line-height: 1; }
+
+.side-ruler { display: flex; gap: 8px; }
+.side-ruler b { width: 1px; height: 15px; background: #ffb6c1; }
+.side-ruler b:nth-child(3n) { height: 25px; background: #ff85a2; }
+
+.side-barcode { height: 30px; background: repeating-linear-gradient(90deg, #ff85a2 0px, #ff85a2 2px, transparent 2px, transparent 5px); }
+
+.alert-flash { background: #ff5e84; color: #fff; padding: 5px; font-size: 10px; animation: blinkLight 0.5s infinite; text-align: center; }
+
+/* --- 核心动画 --- */
+@keyframes sideFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+@keyframes waveH { 0%, 100% { height: 20%; } 50% { height: 100%; } }
+@keyframes blinkLight { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }

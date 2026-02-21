@@ -27,7 +27,7 @@ async function init() {
         { 
             name: "夜に駆ける", 
             artist: "YOASOBI",
-            src: "https://cn-gddg-ct-01-12.bilivideo.com/upgcxcode/61/80/293298061/293298061_nb2-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&gen=playurlv3&os=bcache&og=cos&trid=00002b5124ab27f942d687e336320e0b509h&oi=1782024106&mid=0&nbs=1&uipk=5&deadline=1771604789&platform=html5&upsig=9efcd4246a121e075ed072522cd4594c&uparams=e,gen,os,og,trid,oi,mid,nbs,uipk,deadline,platform&cdnid=61312&bvc=vod&nettype=0&bw=291037&build=0&dl=0&f=h_0_0&agrr=0&buvid=&orderid=0,1", 
+            src: "Resource/Song/夜に.mp3", 
             cover: "https://p2.music.126.net/3xWlqwYmfwRFebeiONUpGg==/109951164546210608.jpg?param=300x300",
             netease: "https://music.163.com/#/song?id=1409311773",
             kugou: "https://m.kugou.com/share/song.html?chain=9dZz7afFYV2"
@@ -35,7 +35,7 @@ async function init() {
         { 
             name: "春よ、来い", 
             artist: "松任谷由実",
-            src: "https://cn-gddg-ct-01-10.bilivideo.com/upgcxcode/16/78/953327816/953327816-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&oi=1782024106&platform=html5&og=hw&mid=0&deadline=1771604968&nbs=1&trid=0000d55ebbed721d4133b7af42b21e6cb49h&gen=playurlv3&os=bcache&uipk=5&upsig=42dd92ded6c19e97f40bf344e722ea3d&uparams=e,oi,platform,og,mid,deadline,nbs,trid,gen,os,uipk&cdnid=61310&bvc=vod&nettype=0&bw=406669&build=0&dl=0&f=h_0_0&agrr=0&buvid=&orderid=0,1", 
+            src: "Resource/Song/春.mp3", 
             cover: "https://p1.music.126.net/BtkQkAkVLUjM0rzNBgVnvg==/109951167032274313.jpg?param=300x300",
             netease: "https://music.163.com/#/song?id=27566649",
             kugou: "https://m.kugou.com/share/song.html?chain=9dYrzf3FYV2"
@@ -43,7 +43,7 @@ async function init() {
         {
             name: "Lemon",
             artist: "米津玄師",
-            src: "https://cn-gddg-ct-01-10.bilivideo.com/upgcxcode/77/91/1029159177/1029159177_nb3-1-16.mp4?e=ig8euxZM2rNcNbRVhwdVhwdlhWdVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&oi=2672555743&platform=html5&uipk=5&trid=000067fe5273b6644666b92f4d3a945e4fah&deadline=1771605048&os=bcache&nbs=1&mid=0&gen=playurlv3&og=ali&upsig=1838bf86ffb64ac21137054e972d3707&uparams=e,oi,platform,uipk,trid,deadline,os,nbs,mid,gen,og&cdnid=61310&bvc=vod&nettype=0&bw=135294&agrr=0&buvid=&build=0&dl=0&f=h_0_0&orderid=0,1",
+            src: "Resource/Song/Lemon.mp3",
             cover: "https://p1.music.126.net/jtPZRUFrSS-nRCjW_LYowQ==/109951166521931227.jpg?param=300x300",
             netease: "https://music.163.com/#/song?id=536622304",
             kugou: "https://m.kugou.com/share/song.html?chain=9eop91aFYV2"
@@ -212,7 +212,102 @@ async function init() {
             overlay.style.background = `rgba(255, 255, 255, ${opacityValue})`;
         }
     });
-}
+
+    // Photo
+    // --- Photo 画廊逻辑 (修复版) ---
+    const artWork = [
+        { src: 'Resource/Image/placeholder1.jpg', title: '「 盛夏柠檬汽水的耳语 」', date: '2026.02.21' },
+        { src: 'Resource/Image/placeholder2.jpg', title: '「 心动超负荷 」', date: '2026.02.21' },
+        { src: 'Resource/Image/placeholder3.jpg', title: '「 塔卫二的晨曦 」', date: '2026.02.21' }
+    ];
+
+    let currentIndex = 0;
+
+    // 1. 核心更新函数
+    function updateGallery(index) {
+        const imgBtn = document.getElementById('gallery-img');
+        const titleBtn = document.getElementById('art-title');
+        const dateBtn = document.getElementById('art-date');
+
+        if (!imgBtn || !titleBtn || !dateBtn) {
+            console.error("画廊元素未找到，请检查 HTML 中的 ID (art-title, art-date) 是否存在");
+            return;
+        }
+
+        imgBtn.style.opacity = '0';
+        imgBtn.style.transform = 'scale(1.05) translateY(5px)';
+
+        setTimeout(() => {
+            imgBtn.src = artWork[index].src;
+            titleBtn.textContent = artWork[index].title;
+            dateBtn.textContent = artWork[index].date;
+
+            imgBtn.style.opacity = '1';
+            
+            // 修改这里：图片加载后，把 transform 设为空字符串
+            // 这样它就会重新听从 CSS (包含 hover 缩放) 的话了
+            imgBtn.style.transform = ''; 
+        }, 400);
+    }
+
+    // 2. 直接获取按钮并绑定 (不要再包裹 DOMContentLoaded)
+    const galleryNext = document.querySelector('.next-photo');
+    const galleryPrev = document.querySelector('.prev-photo');
+
+    if (galleryNext) {
+        galleryNext.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % artWork.length;
+            updateGallery(currentIndex);
+        });
+    }
+
+    if (galleryPrev) {
+        galleryPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + artWork.length) % artWork.length;
+            updateGallery(currentIndex);
+        });
+    }
+
+    // 3. 默认加载 Index 0 (同样直接执行)
+    const initialImg = document.getElementById('gallery-img');
+    const initialTitle = document.getElementById('art-title');
+    const initialDate = document.getElementById('art-date');
+
+    if (initialImg && initialTitle && initialDate) {
+        initialImg.src = artWork[0].src;
+        initialTitle.textContent = artWork[0].title;
+        initialDate.textContent = artWork[0].date;
+        console.log("画廊初始数据加载成功");
+    }
+
+    // --- 8. 点击显示原图逻辑 ---
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const galleryImg = document.getElementById('gallery-img'); // 你的插画 ID
+
+    if (galleryImg && modal) {
+        // 点击画框内的图片
+        galleryImg.onclick = function() {
+            modal.style.display = "flex";
+            modal.style.flexDirection = "column";
+            modalImg.src = this.src; // 载入当前图片地址
+            
+            // 获取当前的标题
+            const currentTitle = document.getElementById('art-title');
+            if (currentTitle) {
+                modalCaption.innerHTML = currentTitle.textContent;
+            }
+        };
+
+        // 点击遮罩层任何地方关闭
+        modal.onclick = function(e) {
+            // 如果点击的是图片本身，不关闭（可选）
+            // 这里设定为点击任何地方都关闭，更符合移动端习惯
+            modal.style.display = "none";
+        };
+    }
+} // 这是 init 函数的结尾
 
 // 启动
 document.addEventListener("DOMContentLoaded", init);
