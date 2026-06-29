@@ -62,6 +62,95 @@ async function init() {
     let targetSmile = 0.5;
 
     // --- 3. 辅助函数 ---
+    async function loadLogs() {
+
+        const response = await fetch("Resource/Data/logs.json");
+        const logs = await response.json();
+
+        const container = document.getElementById("logs");
+        container.innerHTML = "";
+
+        logs.forEach((log,index)=>{
+
+            const aos = index % 2 === 0 ? "fade-left" : "fade-right";
+
+            container.innerHTML += `
+            <div class="panel milestone" data-aos="${aos}">
+
+                <div class="timeline-dot"></div>
+
+                <h2 class="zcool-kuaile-regular">
+                    ${log.date} - ${log.title}
+                </h2>
+
+                ${
+                    log.content.map(text=>`<p>${text}</p>`).join("")
+                }
+
+            </div>
+            `;
+
+        });
+
+        AOS.refresh();
+    }
+
+    async function loadDiary() {
+        const response = await fetch("Resource/Data/diary.json");
+        const diary = await response.json();
+    
+        const container = document.getElementById("diary");
+        container.innerHTML = "";
+
+        const diaryIcons = [
+            "🐾",
+            "🐱",
+            "🐟",
+            "🌸",
+            "🍓",
+            "🍀",
+            "☕",
+            "🎀",
+            "✨",
+            "💖",
+            "🌙",
+            "🩷",
+            "🐠",
+            "🍮",
+            "🫧",
+            "🧸"
+        ];
+
+        diary.forEach((item, index) => {
+
+            const side = index % 2 === 0 ? "left-card" : "right-card";
+            const icon = diaryIcons[Math.floor(Math.random()*diaryIcons.length)];
+
+            container.innerHTML += `
+            <div class="diary-item ${side}" data-aos="fade-up">
+
+                <div class="panel">
+
+                    <h3>${item.title}</h3>
+
+                    <small>${item.date}</small>
+
+                    ${
+                        item.content.map(text=>`<p>${text}</p>`).join("")
+                    }
+
+                    <div class="diary-icon">${icon}</div>
+
+                </div>
+
+            </div>
+            `;
+
+        });
+
+        AOS.refresh();
+    }
+
     function formatTime(seconds) {
         if (isNaN(seconds)) return "00:00";
         let min = Math.floor(seconds / 60);
@@ -160,6 +249,8 @@ async function init() {
 
     // --- 5. 初始化加载 ---
     loadMusic(musicIndex);
+    loadLogs();
+    loadDiary();
 
     // --- 6. Live2D 初始化 ---
     const app = new PIXI.Application({

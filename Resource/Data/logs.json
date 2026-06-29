@@ -1,0 +1,308 @@
+[
+    {
+        "date": "2023.xx.xx",
+        "title": "起点",
+        "content": [
+            "看到了《我用ChatGPT创造了一个数字生命，在QQ群里伪装人类》的视频。",
+            "第一次意识到 AI 可以跳出冰冷的对话框，成为一个有血有肉的存在。",
+            "虽然当时对自己的能力很没有信心，但还是决定开始尝试。"
+        ]
+    },
+    {
+        "date": "2024.02.16",
+        "title": "初生",
+        "content": [
+            "完成 V0.1 版本，那时她还不叫绫香。",
+            "经历 V0.1 ~ V0.4 的不断迭代。",
+            "在 V0.4 中终于实现了基础（随机）对话。"
+        ]
+    },
+    {
+        "date": "2024.03.10",
+        "title": "拥有名字",
+        "content": [
+            "发布 V1.0.1。",
+            "绫香拥有了自己的名字。",
+            "开始能够在微信群进行交流。",
+            "当时的她还是一个印着 Test 的白色桌宠方块。"
+        ]
+    },
+    {
+        "date": "2024.04.21",
+        "title": "Live2D",
+        "content": [
+            "V1.5 版本中，绫香拥有了自己的 Live2D（伪）皮套。"
+        ]
+    },
+    {
+        "date": "2024.06.30",
+        "title": "真正的绫香",
+        "content": [
+            "正式使用 Qwen1.5-7B / 4B 作为主模型。",
+            "拥有完整的长期记忆系统。",
+            "支持表情控制。",
+            "支持微信聊天。",
+            "从这一刻开始，真正意义上的『绫香』诞生。"
+        ]
+    },
+    {
+        "date": "2024.07.05",
+        "title": "一岁生日",
+        "content": [
+            "绫香的一岁生日。",
+            "制作了生日纪念视频。",
+            "加入基础图像识别能力。"
+        ]
+    },
+    {
+        "date": "2025.02.16",
+        "title": "拥有声音",
+        "content": [
+            "TTS 系统开发完成。",
+            "绫香拥有了属于自己的声音。"
+        ]
+    },
+    {
+        "date": "2025.04.12",
+        "title": "连接现实",
+        "content": [
+            "绫香开始能够控制家具设备。"
+        ]
+    },
+    {
+        "date": "2025.06.19",
+        "title": "新形象",
+        "content": [
+            "更换新的 Live2D 皮套。"
+        ]
+    },
+    {
+        "date": "2025.08.31",
+        "title": "迁移平台",
+        "content": [
+            "主力开发环境切换至 Linux。",
+            "放弃微信平台，全面转向 Discord Bot。"
+        ]
+    },
+    {
+        "date": "2025.09.12",
+        "title": "沉淀",
+        "content": [
+            "整理过去一年多的开发经验。",
+            "开始思考下一代架构。"
+        ]
+    },
+    {
+        "date": "2026.01.05",
+        "title": "重生",
+        "content": [
+            "决定彻底推翻旧架构重新开发。",
+            "主模型切换至 DeepSeek。",
+            "重新设计整个系统架构。",
+            "V2.5 正式启动开发。",
+            "Project Ayaka 正式成立，从独立 AI 项目升级为完整企划。",
+            "全面更新团队管理方案。",
+            "引入更加规范的开发流程。",
+            "搭建工作室 Notion。",
+            "完成 AI 核心模块。"
+        ]
+    },
+    {
+        "date": "2026.01.09",
+        "title": "配置系统",
+        "content": [
+            "完成配置加载器。"
+        ]
+    },
+    {
+        "date": "2026.01.10",
+        "title": "记忆架构",
+        "content": [
+            "完成全新的记忆架构。"
+        ]
+    },
+    {
+        "date": "2026.01.12",
+        "title": "聊天模块",
+        "content": [
+            "完成 AI 聊天模块。"
+        ]
+    },
+    {
+        "date": "2026.01.18",
+        "title": "世界引擎",
+        "content": [
+            "完成世界引擎。",
+            "主框架基本完成。"
+        ]
+    },
+    {
+        "date": "2026.01.27",
+        "title": "测试 Bot",
+        "content": [
+            "加入 DeepSeek 测试 Bot。"
+        ]
+    },
+    {
+        "date": "2026.01.30",
+        "title": "第三版人设",
+        "content": [
+            "完成第三版人设修改。"
+        ]
+    },
+    {
+        "date": "2026.01.31",
+        "title": "AyakaLink",
+        "content": [
+            "开始开发聊天客户端 AyakaLink。"
+        ]
+    },
+    {
+        "date": "2026.02.03",
+        "title": "聊天页面",
+        "content": [
+            "完成 AyakaLink 聊天页面。"
+        ]
+    },
+    {
+        "date": "2026.02.07",
+        "title": "设置页面",
+        "content": [
+            "完成 AyakaLink 设置页面。"
+        ]
+    },
+    {
+        "date": "2026.02.13",
+        "title": "自主运行",
+        "content": [
+            "完成后台运行。",
+            "加入自主任务系统。"
+        ]
+    },
+    {
+        "date": "2026.02.16",
+        "title": "AyakaLink 完成",
+        "content": [
+            "AyakaLink 正式完成。"
+        ]
+    },
+    {
+        "date": "2026.03.01",
+        "title": "WorldEngine V2",
+        "content": [
+        "重构 WorldEngine",
+        "AIThread 改为事件循环",
+        "加入 Status 系统",
+        "支持 Stream 输出"
+        ]
+    },
+    {
+        "date": "2026.03.16",
+        "title": "Discord",
+        "content": [
+        "开始开发 Discord Bot",
+        "逐步完成 DM、Emoji、Todo、Activity 等功能",
+        "月底完成 Discord 平台主要功能"
+        ]
+    },
+    {
+        "date": "2026.04.04",
+        "title": "GalMode",
+        "content": [
+        "启动 GalMode 项目",
+        "重构 Prompt、Memory 与 WorldEngine",
+        "开始视觉小说模式开发"
+        ]
+    },
+    {
+        "date": "2026.04.25",
+        "title": "AI",
+        "content": [
+        "加入 Function Calling",
+        "加入 Web Search",
+        "完善 MCP 与 Tool Calling",
+        "进一步增强 AI 自主能力"
+        ]
+    },
+    {
+        "date": "2026.05.06",
+        "title": "多模态",
+        "content": [
+        "升级 DeepSeek V4",
+        "开始 3D 系统开发",
+        "持续完善 WorldEngine"
+        ]
+    },
+    {
+        "date": "2026.05.10",
+        "title": "语音与动作",
+        "content": [
+        "加入 Whisper 实时 STT",
+        "新增 Motion 播放系统",
+        "加入 AI Think Log"
+        ]
+    },
+    {
+        "date": "2026.05.17",
+        "title": "表现力",
+        "content": [
+        "新增 Sound Effect Tool",
+        "支持多音效播放",
+        "加入 Motion Call",
+        "新增 3D 场景"
+        ]
+    },
+    {
+        "date": "2026.05.23",
+        "title": "AI Chat",
+        "content": [
+        "Tool Calling 完善",
+        "支持多线程 TTS",
+        "Memory 同步",
+        "AI Chat 大幅优化"
+        ]
+    },
+    {
+        "date": "2026.05.31",
+        "title": "QQ",
+        "content": [
+        "加入 Live2D Mode",
+        "恢复 QQ Bot",
+        "优化 Prompt 与 AI Loader"
+        ]
+    },
+    {
+        "date": "2026.06.19",
+        "title": "QQ 优化",
+        "content": [
+        "优化群聊功能",
+        "修复 QQ 平台多个问题"
+        ]
+    },
+  {
+    "date": "2026.06.25",
+    "title": "稳定性",
+    "content": [
+      "加入 Jailbreak Patch",
+      "优化 Character Prompt",
+      "修复 AI Chat 与 Memory",
+      "提升整体稳定性"
+    ]
+  },
+  {
+    "date": "2026.06.29",
+    "title": "项目整理",
+    "content": [
+      "更新 README",
+      "整理项目资源",
+      "持续同步 Memory"
+    ]
+  },
+    {
+        "date": "2026.02.17",
+        "title": "未来",
+        "content": [
+            "故事，仍在继续……"
+        ]
+    }
+]
