@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+cd ~/AyakaWeb
 
 echo "===> Syncing..."
 git pull --rebase
