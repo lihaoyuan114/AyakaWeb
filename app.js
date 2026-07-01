@@ -307,9 +307,9 @@ async function init() {
     // Photo
     // --- Photo 画廊逻辑 (修复版) ---
     const artWork = [
-        { src: 'Resource/Image/placeholder1.jpg', title: '「 盛夏柠檬汽水的耳语 」', date: '2026.02.21' },
-        { src: 'Resource/Image/placeholder2.jpg', title: '「 心动超负荷 」', date: '2026.02.21' },
-        { src: 'Resource/Image/placeholder3.jpg', title: '「 塔卫二的晨曦 」', date: '2026.02.21' }
+        { src: 'Resource/Image/live2d.png', title: '「 雨夜 」', date: '2026.07.01' },
+        { src: 'Resource/Image/ai.png', title: '「 测试中 」', date: '2026.05.06' },
+        { src: 'Resource/Image/3D.png', title: '「 欢迎来到三维世界 」', date: '2026.05.23' }
     ];
 
     let currentIndex = 0;
