@@ -4,6 +4,7 @@ set -e
 cd ~/AyakaWeb
 
 echo "===> Syncing..."
+git fetch
 git pull --rebase
 
 echo "===> Adding diary..."
